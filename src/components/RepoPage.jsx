@@ -68,7 +68,11 @@ class RepoPage extends Component {
             <p>Packages</p>
           </div>
           <div className="tab-content">
-            <RepoList repos={data.repos} total={data.repoCount} />
+            <RepoList
+              repos={data.repos}
+              total={data.repoCount}
+              username={data.login}
+            />
           </div>
         </div>
       </>

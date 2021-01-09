@@ -56,7 +56,6 @@ class Layout extends Component {
         const repoCount = repositories.totalCount;
         const repos = repositories.nodes;
         const stars = starredRepositories.totalCount;
-        console.log(repos);
 
         this.setState({
           avatarUrl,
