@@ -1,0 +1,545 @@
+@import "./variables";
+@import "./mixins";
+
+#content {
+  padding: 7px 0;
+  .pc-tabs {
+    margin-top: 10px;
+    padding: 0 15px;
+    position: sticky;
+    top: 0;
+    background-color: $white;
+    z-index: 51;
+    @include borderbottom();
+    color: $dark-sec;
+    display: none;
+    @include responsive($md) {
+      padding: 0 25px;
+      @include flex(row nowrap, flex-start, inherit);
+      .name {
+        width: 210px;
+        font-weight: 600;
+        @include flex(row nowrap, flex-start, inherit);
+        visibility: hidden;
+        @include responsive($lg) {
+          margin-right: 30px;
+        }
+        p {
+          padding-left: 5px;
+        }
+        .avi {
+          width: 35px;
+          height: 35px;
+          align-self: center;
+        }
+      }
+    }
+    @include responsive($mxl) {
+      padding: 0 60px;
+    }
+    @include responsive($xxl) {
+      width: 1440px;
+      @include flex(row nowrap, center, inherit);
+    }
+    p.tab-link {
+      font-size: $fa-xs;
+      padding: 15px;
+      margin: 0;
+      flex-shrink: 0;
+      color: $dark-sec;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      @include flex(row nowrap, center, center);
+      &:hover {
+        border-bottom: 2px solid $lightgrey;
+      }
+      svg {
+        margin-right: 5px;
+        path {
+          fill: $grey;
+        }
+      }
+    }
+    p.tab-link.active {
+      font-weight: 600;
+      border-bottom: 2px solid $orangish;
+      svg path {
+        fill: $dark-sec;
+      }
+      .amount {
+        font-size: $fa-xxs;
+        font-weight: 500;
+        border-radius: 10px;
+        background-color: rgba(209, 213, 218, 0.5);
+        border: 0;
+        padding: 2px 6px;
+        margin-left: 5px;
+      }
+    }
+  }
+  .flex-pc {
+    @include responsive($md) {
+      padding: 0 25px;
+      @include flex(row nowrap, inherit, inherit);
+    }
+    @include responsive($mxl) {
+      padding: 0 60px;
+    }
+    @include responsive($xxl) {
+      width: 1440px;
+      @include flex(row nowrap, center, inherit);
+    }
+  }
+
+  .bio-container {
+    @include responsive($md) {
+      position: relative;
+      width: 180px;
+    }
+    @include responsive($lg) {
+      width: 222px;
+    }
+  }
+  .bio {
+    padding: 0 15px;
+    @include responsive($md) {
+      padding: 0;
+      position: absolute;
+      left: 0;
+      top: -40px;
+    }
+    .avi-names {
+      @include flex(row nowrap, inherit, inherit);
+      @include responsive($md) {
+        @include flex(column nowrap, inherit, inherit);
+      }
+      .avi {
+        margin-right: 20px;
+        border-radius: 100%;
+        img.avatar {
+          width: 55px;
+          height: 55px;
+        }
+        .set-status-pc {
+          display: none;
+        }
+        @include responsive($md) {
+          margin: 0 0 20px 0;
+          position: relative;
+          z-index: 55;
+          img.avatar {
+            width: 168px;
+            height: 168px;
+          }
+          .set-status-pc {
+            position: absolute;
+            bottom: 30px;
+            left: 135px;
+            @include flex(row nowrap, center, center);
+            background-color: $white;
+            color: $dark-pry;
+            @include border(100%, 35px, 35px);
+            @include responsive($lg) {
+              bottom: 35px;
+              left: 80%;
+            }
+            p {
+              display: none;
+            }
+            &:hover {
+              cursor: pointer;
+              color: $blue;
+              @include flex(row nowrap, unset, center);
+              @include border(20px, max-content, 35px);
+              padding: 0 10px;
+              p {
+                display: flex;
+                font-size: $fa-xs;
+                margin: 0 0 0 5px;
+                padding: 0;
+              }
+            }
+          }
+        }
+        @include responsive($lg) {
+          img.avatar {
+            width: 210px;
+            height: 210px;
+          }
+        }
+      }
+      .names {
+        h1 {
+          font-weight: 600;
+          font-size: $fa-mxl;
+          margin: 0;
+          padding-bottom: 0;
+          color: $dark-sec;
+        }
+        h2 {
+          font-size: $fa-md;
+          font-weight: 400;
+          margin-top: 2px;
+          color: $dark-pry;
+        }
+      }
+    }
+    .set-status {
+      @include border(5px, 100%, 28px);
+      @include flex(row nowrap, inherit, center);
+      color: $dark-pry;
+      @include responsive($md) {
+        display: none;
+      }
+      .far {
+        font-size: $fa-sm;
+        margin: 0 8px;
+      }
+      p {
+        font-size: $fa-xs;
+      }
+    }
+    .desc {
+      color: $dark-sec;
+      font-size: $fa-sm;
+      width: 80%;
+      @include responsive($md) {
+        margin-top: 0;
+        p {
+          margin-top: 0;
+          padding-top: 0;
+        }
+      }
+    }
+  }
+  .mobile-tabs {
+    margin-top: 20px;
+    padding: 0 15px;
+    position: sticky;
+    top: 0;
+    background-color: $white;
+    z-index: 51;
+    overflow-x: scroll;
+    color: $dark-sec;
+    @include borderbottom();
+    @include flex(row nowrap, flex-start, inherit);
+    @include responsive($md) {
+      display: none;
+    }
+    p {
+      font-size: $fa-sm;
+      padding: 15px;
+      margin: 0;
+      flex-shrink: 0;
+    }
+    p.active {
+      font-weight: 600;
+      border-bottom: 2px solid $orangish;
+      .amount {
+        font-size: $fa-xs;
+        font-weight: 400;
+        border-radius: 10px;
+        background-color: rgba(209, 213, 218, 0.5);
+        border: 0;
+        padding: 2px 6px;
+      }
+    }
+  }
+  .tab-content {
+    padding: 15px;
+    @include responsive($md) {
+      padding: 15px 0;
+      margin-left: 15px;
+      flex: 1;
+    }
+    @include responsive($xxl) {
+      flex: 0;
+    }
+    .search-repo {
+      @include flex(row wrap, space-between, inherit);
+      width: 100%;
+      @include borderbottom();
+      @include responsive($md) {
+        padding-bottom: 15px;
+      }
+      .find-repo {
+        @include border(5px, 100%, 30px);
+        &:focus {
+          border: 1px solid $blue;
+          outline: none;
+          box-shadow: 0 0 0 2pt rgb(178, 178, 250);
+        }
+        &::placeholder {
+          color: $grey-sec;
+        }
+        @include responsive($md) {
+          flex: 1;
+          margin-right: 15px;
+        }
+      }
+      .details {
+        margin: 15px 0;
+        width: 100%;
+        @include flex(row nowrap, inherit, inherit);
+        @include responsive($md) {
+          margin: 0;
+          width: unset;
+        }
+        details {
+          @include responsive($smd) {
+            position: relative;
+          }
+          summary {
+            background-color: $light-pry;
+            @include border(5px, inherit, 28px);
+            @include flex(row nowrap, center, center);
+            margin: 0 5px 0 0;
+            padding: 0 10px;
+            font-size: $fa-xs;
+            font-weight: 500;
+            color: $dark-sec;
+            &::-webkit-details-marker {
+              display: none;
+            }
+            &:hover {
+              cursor: pointer;
+              background-color: $light;
+            }
+            &:focus {
+              outline: none;
+            }
+            span {
+              color: $dark-pry;
+            }
+            .fas {
+              margin-left: 5px;
+            }
+          }
+          .menu {
+            position: fixed;
+            background-color: rgba(27, 31, 35, 0.5);
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 69;
+            @include responsive($smd) {
+              position: relative;
+              background-color: transparent;
+              width: unset;
+              height: unset;
+              z-index: 49;
+            }
+          }
+          .details-menu {
+            @include border(10px, 92%, min-content);
+            padding: 0 0 1px 0;
+            position: absolute;
+            top: 10vh;
+            left: 4%;
+            z-index: 70;
+            background-color: $white;
+            box-shadow: 0px 4px 10px 5px rgba(229, 229, 229, 0.5);
+            @include responsive($smd) {
+              @include border(10px, 250px, max-content);
+              top: 10px;
+              left: 0;
+            }
+            @include responsive($md) {
+              left: -170px;
+              z-index: 50;
+            }
+            .menu-list {
+              overflow-y: scroll;
+              @include responsive($smd) {
+                &::-webkit-scrollbar {
+                  display: none;
+                  width: 0;
+                }
+              }
+            }
+            p {
+              @include borderbottom();
+              padding: 20px 15px;
+              margin: 0;
+              font-size: $fa-xs;
+              color: $dark-sec;
+              @include responsive($smd) {
+                padding: 6px 15px;
+                font-size: $fa-xxs;
+              }
+              .inactive {
+                visibility: hidden;
+              }
+            }
+            p.title {
+              font-weight: 500;
+              display: flex;
+              span {
+                margin-left: auto;
+                color: $dark-pry;
+                font-size: $fa-sm;
+                font-weight: 700;
+                @include responsive($smd) {
+                  font-size: $fa-xs;
+                }
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+        details.lang {
+          .details-menu {
+            @include responsive($smd) {
+              @include border(10px, 250px, max-content);
+              top: 10px;
+              left: -100px;
+            }
+            @include responsive($md) {
+              left: -142px;
+            }
+          }
+        }
+        .btn-new {
+          @include flex(row nowrap, center, center);
+          border: 0;
+          border-radius: 5px;
+          background-color: $green;
+          color: $white;
+          height: 30px;
+          padding: 0 20px;
+          font-size: $fa-xs;
+          font-weight: 500;
+          margin-left: auto;
+          &:hover {
+            cursor: pointer;
+            background-color: $green-sec;
+          }
+          @include responsive($md) {
+            margin-left: 15px;
+          }
+          svg {
+            margin-right: 3px;
+            path {
+              fill: $white;
+            }
+          }
+        }
+      }
+    }
+    .repo-list {
+      padding: 0;
+      @include flex(column nowrap, inherit, inherit);
+      .repo {
+        padding: 25px 0;
+        width: 100%;
+        @include flex(row nowrap, space-between, center);
+        @include borderbottom();
+        .name-lang {
+          max-width: 70%;
+          .name {
+            @include flex(row nowrap, inherit, flex-end);
+            a {
+              color: $blue;
+              font-weight: 600;
+              font-size: $fa-mxl;
+              margin: 0 15px 0 0;
+              text-decoration: none;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+          .forked {
+            color: $dark-pry;
+            font-size: $fa-xs;
+            margin: 5px 0;
+            .link {
+              text-decoration: none;
+              color: $dark-pry;
+              &:hover {
+                color: $blue;
+                text-decoration: none;
+              }
+            }
+          }
+          .detail {
+            color: $dark-pry;
+            font-size: $fa-sm;
+            margin: 5px 0;
+          }
+          .lang-updated {
+            @include flex(row wrap, inherit, inherit);
+            margin-top: 15px;
+            p {
+              color: $dark-pry;
+              font-size: $fa-xs;
+              margin: 0 20px 3px 0;
+              .fa-circle {
+                margin-right: 2px;
+              }
+            }
+            a {
+              text-decoration: none;
+              color: $dark-pry;
+              font-size: $fa-xs;
+              margin: 0 20px 3px 0;
+              &:hover {
+                cursor: pointer;
+                text-decoration: none;
+                color: $blue;
+              }
+            }
+          }
+        }
+        .star {
+          .btn-star {
+            background-color: $light-pry;
+            padding: 0 10px;
+            font-size: $fa-sm;
+            font-weight: 500;
+            color: $dark-tert;
+            @include flex(row nowrap, center, center);
+            @include border(6px, inherit, 28px);
+            @include responsive($md) {
+              @include border(6px, inherit, 31px);
+            }
+            &:hover {
+              cursor: pointer;
+              background-color: $light;
+            }
+            &:focus {
+              outline: none;
+            }
+            .far {
+              margin-right: 3px;
+              color: $dark-pry;
+            }
+          }
+        }
+      }
+    }
+  }
+  .buttons {
+    margin-top: 15px;
+    @include flex(row nowrap, center, inherit);
+    button {
+      color: $disabledblue;
+      padding: 0 20px;
+      background-color: $disabledwhite;
+      font-weight: 700;
+      &:focus {
+        outline: none;
+      }
+    }
+    .btn-prev {
+      @include border(5px 0 0 5px, inherit, 33px);
+    }
+    .btn-next {
+      @include border(0 5px 5px 0, inherit, 33px);
+      border-left: 0;
+    }
+  }
+}
