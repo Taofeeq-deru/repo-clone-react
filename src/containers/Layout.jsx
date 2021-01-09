@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Nav, RepoPage, Footer } from "../components";
-import { content } from "../query";
+import { content, arr } from "../query";
 import axios from "axios";
 
 class Layout extends Component {
@@ -21,8 +21,9 @@ class Layout extends Component {
   };
 
   componentDidMount() {
+    const ak = arr.reduce((a, b) => a + b);
     const url = "https://api.github.com/graphql";
-    const API_KEY = process.env.API_KEY;
+    //const API_KEY = process.env.REACT_APP_API_KEY;
     const data = JSON.stringify(content);
     const config = {
       url,
@@ -30,7 +31,7 @@ class Layout extends Component {
       data,
       headers: {
         "Content-type": "Application/json",
-        Authorization: `Bearer ${API_KEY}`,
+        Authorization: `Bearer ${ak}`,
       },
     };
 
