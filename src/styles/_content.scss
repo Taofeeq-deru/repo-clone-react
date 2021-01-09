@@ -525,6 +525,12 @@
     .repo-list {
       padding: 0;
       @include flex(column nowrap, inherit, inherit);
+      .no-result {
+        text-align: center;
+        color: $dark-sec;
+        font-weight: 700;
+        font-size: $fa-md;
+      }
       .mssg {
         @include borderbottom();
         @include flex(row nowrap, flex-start, center);

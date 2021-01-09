@@ -1482,6 +1482,13 @@
           align-items: inherit;
 }
 
+#content .tab-content .repo-list .no-result {
+  text-align: center;
+  color: #24292e;
+  font-weight: 700;
+  font-size: 16px;
+}
+
 #content .tab-content .repo-list .mssg {
   border-bottom: 1px solid #e1e4e8;
   display: -webkit-box;

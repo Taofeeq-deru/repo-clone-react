@@ -7,9 +7,12 @@ class RepoList extends Component {
     lang: false,
     pages: "",
     current: "",
+    search: "",
     perPage: {},
     repos: [],
     mssg: null,
+    typeVal: "All",
+    langVal: "All",
   };
 
   componentDidMount() {
@@ -34,7 +37,6 @@ class RepoList extends Component {
     if (total > 30) {
       pages = Math.ceil(total / 30);
     }
-    console.log(pages);
     for (let id = 1; id <= pages; id++) {
       let end = start + 30;
       let pageData = repos.slice(start, end);
@@ -65,24 +67,93 @@ class RepoList extends Component {
     window.scrollTo(0, 0);
   }
 
-  changeLanguage(e) {
-    const lang = e.target.getAttribute("data-lang");
-    const { repos } = this.props;
-    const data = repos.filter(
-      (per) => per.primaryLanguage && per.primaryLanguage.name === lang
-    );
-    console.log(data);
-    const mssg = `${data.length} results for repositories written in ${lang}`;
-    this.setState({ ...this.state, repos: data, mssg });
+  changeType(e) {
+    const type = e.target.getAttribute("data-type");
+    if (type === "All" || type === "Sources") {
+      const { perPage, current } = this.state;
+      const data = perPage.find((per) => per.id === current);
+      this.setState({
+        ...this.state,
+        repos: data.pageData,
+        mssg: null,
+        typeVal: type,
+      });
+    } else {
+      const { repos } = this.props;
+      const data = repos.filter((per) => per[type] === true);
+      let label;
+      let val;
+      if (type === "isFork") {
+        label = "forked";
+        val = "Forks";
+      } else if (type === "isArchived") {
+        label = "archived";
+        val = "Archived";
+      } else {
+        label = "mirror";
+        val = "Mirrors";
+      }
+      const mssg = `${data.length} result${
+        data.length > 1 ? "s" : ""
+      } for ${label} repositories`;
+      this.setState({ ...this.state, repos: data, mssg, typeVal: val });
+    }
     setTimeout(() => {
       this.closeDetails();
-    }, 1000);
+    }, 500);
+  }
+
+  changeLanguage(e) {
+    const lang = e.target.getAttribute("data-lang");
+    if (lang === "All") {
+      const { perPage, current } = this.state;
+      const data = perPage.find((per) => per.id === current);
+      this.setState({
+        ...this.state,
+        repos: data.pageData,
+        mssg: null,
+        langVal: lang,
+      });
+    } else {
+      const { repos } = this.props;
+      const data = repos.filter(
+        (per) => per.primaryLanguage && per.primaryLanguage.name === lang
+      );
+      const mssg = `${data.length} result${
+        data.length > 1 ? "s" : ""
+      } for repositories written in ${lang}`;
+      this.setState({ ...this.state, repos: data, mssg, langVal: lang });
+    }
+    setTimeout(() => {
+      this.closeDetails();
+    }, 500);
+  }
+
+  handleSearch(e) {
+    const value = e.target.value;
+    const { repos } = this.props;
+    //console.log(repos);
+    const data = repos.filter(
+      (per) =>
+        per.name.toLowerCase().search(value) >= 0 ||
+        (per.description && per.description.toLowerCase().search(value) >= 0)
+    );
+    const mssg = `${data.length} result${
+      data.length > 1 ? "s" : ""
+    } for repositories matching ${value}`;
+    this.setState({ ...this.state, repos: data, mssg });
   }
 
   clearFilter() {
     const { perPage, current } = this.state;
     const data = perPage.find((per) => per.id === current);
-    this.setState({ ...this.state, repos: data.pageData, mssg: null });
+    this.setState({
+      ...this.state,
+      repos: data.pageData,
+      mssg: null,
+      typeVal: "All",
+      langVal: "All",
+    });
     window.scrollTo(0, 0);
   }
 
@@ -104,7 +175,17 @@ class RepoList extends Component {
   }
 
   render() {
-    const { type, lang, repos, pages, current, mssg } = this.state;
+    const {
+      type,
+      lang,
+      repos,
+      pages,
+      current,
+      mssg,
+      typeVal,
+      langVal,
+    } = this.state;
+    const { username } = this.props;
     const months = {
       0: "Jan",
       1: "Feb",
@@ -141,13 +222,14 @@ class RepoList extends Component {
             type="search"
             name="find-repo"
             id="find-repo"
+            onChange={(e) => this.handleSearch(e)}
             className="find-repo"
             placeholder="Find a repository..."
           />
           <div className="details">
             <details open={type}>
               <summary onClick={(e) => this.toggleDetails(e)} data-dd="type">
-                <span data-dd="type">Type:</span>&nbsp;All
+                <span data-dd="type">Type:</span>&nbsp;{typeVal}
                 <i className="fas fa-caret-down" data-dd="type"></i>
               </summary>
               <div className="menu">
@@ -162,20 +244,49 @@ class RepoList extends Component {
                     </span>
                   </p>
                   <div className="menu-list">
-                    <p>
-                      <i className="fas fa-check"></i> All
+                    <p data-type="All" onClick={(e) => this.changeType(e)}>
+                      <i
+                        className={`fas fa-check ${
+                          typeVal === "All" ? "" : "inactive"
+                        }`}
+                        data-type="All"></i>{" "}
+                      All
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> Sources
+                    <p data-type="Sources" onClick={(e) => this.changeType(e)}>
+                      <i
+                        className={`fas fa-check ${
+                          typeVal === "Sources" ? "" : "inactive"
+                        }`}
+                        data-type="Sources"></i>{" "}
+                      Sources
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> Forks
+                    <p data-type="isFork" onClick={(e) => this.changeType(e)}>
+                      <i
+                        className={`fas fa-check ${
+                          typeVal === "Forks" ? "" : "inactive"
+                        }`}
+                        data-type="isFork"></i>{" "}
+                      Forks
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> Archived
+                    <p
+                      data-type="isArchived"
+                      onClick={(e) => this.changeType(e)}>
+                      <i
+                        className={`fas fa-check ${
+                          typeVal === "Archived" ? "" : "inactive"
+                        }`}
+                        data-type="isArchived"></i>{" "}
+                      Archived
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> Mirrors
+                    <p
+                      data-type={`fas fa-check ${
+                        typeVal === "Mirrors" ? "" : "inactive"
+                      }`}
+                      onClick={(e) => this.changeType(e)}>
+                      <i
+                        className="fas fa-check inactive"
+                        data-type="isMirror"></i>{" "}
+                      Mirrors
                     </p>
                   </div>
                 </div>
@@ -183,7 +294,7 @@ class RepoList extends Component {
             </details>
             <details className="lang" open={lang}>
               <summary onClick={(e) => this.toggleDetails(e)} data-dd="lang">
-                <span data-dd="lang">Language:</span>&nbsp;All
+                <span data-dd="lang">Language:</span>&nbsp;{langVal}
                 <i className="fas fa-caret-down" data-dd="lang"></i>
               </summary>
               <div className="menu">
@@ -199,33 +310,54 @@ class RepoList extends Component {
                   </p>
                   <div className="menu-list">
                     <p data-lang="All" onClick={(e) => this.changeLanguage(e)}>
-                      <i className="fas fa-check" data-lang="All"></i> All
+                      <i
+                        className={`fas fa-check ${
+                          langVal === "All" ? "" : "inactive"
+                        }`}
+                        data-lang="All"></i>{" "}
+                      All
                     </p>
                     <p
                       data-lang="JavaScript"
                       onClick={(e) => this.changeLanguage(e)}>
                       <i
-                        className="fas fa-check inactive"
+                        className={`fas fa-check ${
+                          langVal === "JavaScript" ? "" : "inactive"
+                        }`}
                         data-lang="JavaScript"></i>{" "}
                       JavaScript
                     </p>
                     <p data-lang="SCSS" onClick={(e) => this.changeLanguage(e)}>
-                      <i className="fas fa-check inactive" data-lang="SCSS"></i>{" "}
+                      <i
+                        className={`fas fa-check ${
+                          langVal === "SCSS" ? "" : "inactive"
+                        }`}
+                        data-lang="SCSS"></i>{" "}
                       SCSS
                     </p>
                     <p data-lang="HTML" onClick={(e) => this.changeLanguage(e)}>
-                      <i className="fas fa-check inactive" data-lang="HTML"></i>{" "}
+                      <i
+                        className={`fas fa-check ${
+                          langVal === "HTML" ? "" : "inactive"
+                        }`}
+                        data-lang="HTML"></i>{" "}
                       HTML
                     </p>
                     <p data-lang="PHP" onClick={(e) => this.changeLanguage(e)}>
-                      <i className="fas fa-check inactive" data-lang="PHP"></i>{" "}
+                      <i
+                        className={`fas fa-check ${
+                          langVal === "PHP" ? "" : "inactive"
+                        }`}
+                        data-lang="PHP"></i>{" "}
                       PHP
                     </p>
                     <p
                       data-lang="Python"
                       onClick={(e) => this.changeLanguage(e)}>
                       <i
-                        className="fas fa-check inactive"
+                        className={`fas fa-check ${
+                          langVal === "Python" ? "" : "inactive"
+                        }`}
                         data-lang="Python"></i>{" "}
                       Python
                     </p>
@@ -264,6 +396,11 @@ class RepoList extends Component {
                 <button>&times;</button> <p className="clear">Clear Filter</p>
               </div>
             </div>
+          )}
+          {repos.length === 0 && (
+            <p className="no-result">
+              {username} doesn't have any repositories that match
+            </p>
           )}
           {repos.map((repo) => (
             <Repo repo={repo} moment={moment} months={months} key={key++} />
