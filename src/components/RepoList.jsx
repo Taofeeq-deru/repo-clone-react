@@ -5,7 +5,86 @@ class RepoList extends Component {
   state = {
     type: false,
     lang: false,
+    pages: "",
+    current: "",
+    perPage: {},
+    repos: [],
+    mssg: null,
   };
+
+  componentDidMount() {
+    this.checkProps();
+  }
+
+  checkProps() {
+    if (this.props.total > 0) {
+      this.getPages();
+    } else {
+      setTimeout(() => {
+        this.checkProps();
+      }, 500);
+    }
+  }
+
+  getPages() {
+    let start = 0;
+    let pages = 1;
+    let perPage = [];
+    const { repos, total } = this.props;
+    if (total > 30) {
+      pages = Math.ceil(total / 30);
+    }
+    console.log(pages);
+    for (let id = 1; id <= pages; id++) {
+      let end = start + 30;
+      let pageData = repos.slice(start, end);
+      start = end;
+      perPage.push({ id, pageData });
+    }
+    const data = perPage.find((per) => per.id === 1);
+    this.setState({
+      ...this.state,
+      pages,
+      perPage,
+      repos: data.pageData,
+      current: 1,
+    });
+  }
+
+  changePage(e) {
+    const page = e.target.getAttribute("data-page");
+    const { current, perPage } = this.state;
+    let newPage;
+    if (page === "next") {
+      newPage = current + 1;
+    } else {
+      newPage = current - 1;
+    }
+    const data = perPage.find((per) => per.id === newPage);
+    this.setState({ ...this.state, current: newPage, repos: data.pageData });
+    window.scrollTo(0, 0);
+  }
+
+  changeLanguage(e) {
+    const lang = e.target.getAttribute("data-lang");
+    const { repos } = this.props;
+    const data = repos.filter(
+      (per) => per.primaryLanguage && per.primaryLanguage.name === lang
+    );
+    console.log(data);
+    const mssg = `${data.length} results for repositories written in ${lang}`;
+    this.setState({ ...this.state, repos: data, mssg });
+    setTimeout(() => {
+      this.closeDetails();
+    }, 1000);
+  }
+
+  clearFilter() {
+    const { perPage, current } = this.state;
+    const data = perPage.find((per) => per.id === current);
+    this.setState({ ...this.state, repos: data.pageData, mssg: null });
+    window.scrollTo(0, 0);
+  }
 
   toggleDetails(e) {
     e.preventDefault();
@@ -23,8 +102,38 @@ class RepoList extends Component {
   closeDetails() {
     this.setState({ ...this.state, type: false, lang: false });
   }
+
   render() {
-    const { type, lang } = this.state;
+    const { type, lang, repos, pages, current, mssg } = this.state;
+    const months = {
+      0: "Jan",
+      1: "Feb",
+      2: "Mar",
+      3: "Apr",
+      4: "May",
+      5: "Jun",
+      6: "Jul",
+      7: "Aug",
+      8: "Sep",
+      9: "Oct",
+      10: "Nov",
+      11: "Dec",
+    };
+
+    const thisMins = new Date().getMinutes();
+    const thisHour = new Date().getHours();
+    const todayDate = new Date().getDate();
+    const thisMonth = new Date().getMonth();
+    const thisYear = new Date().getFullYear();
+
+    const moment = {
+      mins: thisMins,
+      hour: thisHour,
+      date: todayDate,
+      month: thisMonth,
+      year: thisYear,
+    };
+    let key = 1;
     return (
       <>
         <div className="search-repo">
@@ -89,29 +198,48 @@ class RepoList extends Component {
                     </span>
                   </p>
                   <div className="menu-list">
-                    <p>
-                      <i className="fas fa-check"></i> All
+                    <p data-lang="All" onClick={(e) => this.changeLanguage(e)}>
+                      <i className="fas fa-check" data-lang="All"></i> All
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> JavaScript
+                    <p
+                      data-lang="JavaScript"
+                      onClick={(e) => this.changeLanguage(e)}>
+                      <i
+                        className="fas fa-check inactive"
+                        data-lang="JavaScript"></i>{" "}
+                      JavaScript
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> SCSS
+                    <p data-lang="SCSS" onClick={(e) => this.changeLanguage(e)}>
+                      <i className="fas fa-check inactive" data-lang="SCSS"></i>{" "}
+                      SCSS
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> HTML
+                    <p data-lang="HTML" onClick={(e) => this.changeLanguage(e)}>
+                      <i className="fas fa-check inactive" data-lang="HTML"></i>{" "}
+                      HTML
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> PHP
+                    <p data-lang="PHP" onClick={(e) => this.changeLanguage(e)}>
+                      <i className="fas fa-check inactive" data-lang="PHP"></i>{" "}
+                      PHP
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> Python
+                    <p
+                      data-lang="Python"
+                      onClick={(e) => this.changeLanguage(e)}>
+                      <i
+                        className="fas fa-check inactive"
+                        data-lang="Python"></i>{" "}
+                      Python
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> TypeScript
+                    <p
+                      data-lang="TypeScript"
+                      onClick={(e) => this.changeLanguage(e)}>
+                      <i
+                        className="fas fa-check inactive"
+                        data-lang="TypeScript"></i>{" "}
+                      TypeScript
                     </p>
-                    <p>
-                      <i className="fas fa-check inactive"></i> CSS
+                    <p data-lang="CSS" onClick={(e) => this.changeLanguage(e)}>
+                      <i className="fas fa-check inactive" data-lang="CSS"></i>{" "}
+                      CSS
                     </p>
                   </div>
                 </div>
@@ -129,11 +257,35 @@ class RepoList extends Component {
           </div>
         </div>
         <div className="repo-list" id="repoList">
-          <Repo />
+          {mssg && (
+            <div className="mssg">
+              <p className="msg-text">{mssg}</p>
+              <div className="cancel" onClick={() => this.clearFilter()}>
+                <button>&times;</button> <p className="clear">Clear Filter</p>
+              </div>
+            </div>
+          )}
+          {repos.map((repo) => (
+            <Repo repo={repo} moment={moment} months={months} key={key++} />
+          ))}
         </div>
         <div className="buttons">
-          <button className="btn-prev">Previous</button>
-          <button className="btn-next">Next</button>
+          <button
+            className={`btn-prev ${current === 1 ? "disabled" : ""}`}
+            disabled={current === 1 ? true : false}
+            data-page="prev"
+            onClick={(e) => this.changePage(e)}>
+            Previous
+          </button>
+          <button
+            className={`btn-next ${
+              pages === 1 || current > 1 ? "disabled" : ""
+            }`}
+            disabled={pages === 1 || current > 1 ? true : false}
+            data-page="next"
+            onClick={(e) => this.changePage(e)}>
+            Next
+          </button>
         </div>
       </>
     );
