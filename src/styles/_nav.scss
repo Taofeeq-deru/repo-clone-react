@@ -1,0 +1,183 @@
+@import "./variables";
+@import "./mixins";
+
+.nav {
+  background-color: $dark-sec;
+  padding: 17px 20px;
+  @include responsive($md) {
+    padding: 17px 23px;
+  }
+  @include responsive($lg) {
+    padding: 13px 23px;
+  }
+  .link {
+    color: $white;
+    margin: auto 0;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      text-decoration: none;
+      color: $hover;
+    }
+  }
+  .fab {
+    font-size: 200%;
+  }
+  //mobile nav view
+  .mob-view {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    color: $white;
+    .fas {
+      font-size: 200%;
+    }
+    @include responsive($md) {
+      display: none;
+    }
+  }
+  //pc nav view
+  .pc-view {
+    display: none;
+    @include responsive($md) {
+      @include flex(row nowrap, inherit, inherit);
+    }
+    .fab {
+      font-size: 150%;
+    }
+    .search-group {
+      margin: auto 10px;
+      width: 230px;
+      height: 25px;
+      position: relative;
+      @include responsive($lg) {
+        margin: auto 15px;
+      }
+      #pc-search {
+        width: 100%;
+        height: 100%;
+        &:focus + .slash {
+          position: relative;
+          display: none;
+        }
+        &::placeholder {
+          font-size: $fa-xs;
+        }
+      }
+      .slash {
+        position: absolute;
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 4px;
+        right: 8px;
+        border: 1px solid $grey;
+        border-radius: 5px;
+        color: $grey;
+        width: 15px;
+        height: 15px;
+        span {
+          padding: 0;
+          margin: 0;
+          font-size: 7px;
+        }
+      }
+    }
+    .nav-link {
+      margin: auto 5px;
+      font-size: $fa-xs;
+      font-weight: 500;
+      @include responsive($lg) {
+        margin: auto 10px;
+      }
+      &:nth-child(3):after {
+        content: "Pulls";
+        @include responsive($lg) {
+          content: "Pull requests";
+        }
+      }
+    }
+    .end {
+      margin-left: auto;
+      @include flex(row nowrap, inherit, inherit);
+      .nav-link-end {
+        margin: auto 5px;
+        font-size: $fa-xs;
+        color: $white;
+        display: flex;
+        @include responsive($lg) {
+          margin: auto 10px;
+        }
+        &:hover {
+          cursor: pointer;
+          color: $hover;
+        }
+        .avi {
+          width: 25px;
+          height: 25px;
+          margin: auto 0;
+          align-self: baseline;
+        }
+        .fa-caret-down {
+          align-self: center;
+          margin: 0 3px;
+        }
+      }
+    }
+  }
+}
+
+//nav search input
+.nav-search {
+  background: transparent;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  color: $light;
+  &:focus {
+    border: 1px solid $blue;
+    outline: none;
+  }
+  &::placeholder {
+    color: $lightgrey;
+  }
+}
+
+//toggled mobile nav
+.mob-nav {
+  display: none;
+  padding: 1px 15px;
+  background-color: $dark-sec;
+  #mob-search {
+    width: 100%;
+    height: 30px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    li {
+      border-top: 1px solid $grey;
+      color: $white;
+      padding: 10px 0;
+      font-weight: 500;
+      display: flex;
+      .avi {
+        width: 20px;
+        height: 20px;
+        margin: auto 0;
+        align-self: baseline;
+      }
+    }
+  }
+}
+
+.mob-nav.show {
+  @include responsive($md) {
+    display: none;
+  }
+}
+
+.show {
+  display: block;
+}

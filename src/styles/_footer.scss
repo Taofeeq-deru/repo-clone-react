@@ -1,0 +1,46 @@
+@import "./variables";
+@import "./mixins";
+
+footer {
+  margin: 70px 15px 0 15px;
+  padding: 40px 20px;
+  @include bordertop();
+  @include responsive($lg) {
+    padding: 40px 0;
+  }
+  @include responsive($mxl) {
+    margin: 70px 60px 0 60px;
+  }
+  .footer-links {
+    color: $dark-sec;
+    @include flex(row wrap, center, center);
+    p {
+      font-size: $fa-xs;
+      margin: 3px 7px;
+      @include responsive($lg) {
+        margin: 3px 15px;
+      }
+    }
+    p.link {
+      color: $blue;
+      cursor: pointer;
+      &:hover {
+        color: $blue;
+        text-decoration: underline;
+      }
+    }
+    p.pc-only {
+      color: $grey;
+      cursor: pointer;
+      font-size: 200%;
+      margin: 0 30px;
+      display: none;
+      &:hover {
+        color: $grey-sec;
+      }
+      @include responsive($lg) {
+        display: flex;
+      }
+    }
+  }
+}
