@@ -22,7 +22,7 @@ class Layout extends Component {
 
   componentDidMount() {
     const url = "https://api.github.com/graphql";
-    const API_KEY = "dbffe8c6e126ce910903a5e60adcf9e9b5478a0f";
+    const API_KEY = process.env.API_KEY;
     const data = JSON.stringify(content);
     const config = {
       url,
