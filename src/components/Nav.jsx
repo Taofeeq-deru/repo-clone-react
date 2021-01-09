@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import avi from "../avatar.jpg";
 
 class Nav extends Component {
   state = { profile: false, repo: false };
@@ -23,6 +22,7 @@ class Nav extends Component {
 
   render() {
     const { repo, profile } = this.state;
+    const { avi, username } = this.props;
     return (
       <>
         <nav className="nav">
@@ -75,7 +75,7 @@ class Nav extends Component {
                 onClick={(e) => this.toggleDropdown(e)}>
                 <img
                   src={avi}
-                  alt=""
+                  alt={username}
                   className="avi my-avi"
                   data-dd="profile-dd"
                 />
@@ -99,7 +99,7 @@ class Nav extends Component {
           <div className="dd-menu">
             <p className="link signed-in">
               Signed in as <br />
-              <span>Taofeeq-deru</span>
+              <span>{username}</span>
             </p>
             <div className="status-box">
               <div className="set-status">
@@ -140,9 +140,14 @@ class Nav extends Component {
             <li>Explore</li>
             <li>Settings</li>
             <li>
-              <img src={avi} alt="" className="avi my-avi" loading="lazy" />
+              <img
+                src={avi}
+                alt={username}
+                className="avi my-avi"
+                loading="lazy"
+              />
               &nbsp;
-              <span className="my-username">Taofeeq-deru</span>
+              <span className="my-username">{username}</span>
             </li>
             <li>
               <i className="fas fa-sign-out-alt"></i>&nbsp; Sign out

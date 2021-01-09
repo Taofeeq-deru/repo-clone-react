@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 import { Bio, RepoList } from "./index";
-import avi from "../avatar.jpg";
 
 class RepoPage extends Component {
   state = {};
   render() {
+    const { data } = this.props;
     return (
       <>
         {/* {pc-view tab links} */}
         <div className="pc-tabs" role="navigation">
           <div className="name" id="tab-name">
-            <img src={avi} alt="" className="avi my-avi" loading="lazy" />
-            <p className="my-username">Taofeeq-deru</p>
+            <img
+              src={data.avatarUrl}
+              alt={data.login}
+              className="avi my-avi"
+              loading="lazy"
+            />
+            <p className="my-username">{data.login}</p>
           </div>
           <p className="tab-link">
             <svg height="15px" width="15px" viewBox="0 0 16 16">
@@ -51,18 +56,19 @@ class RepoPage extends Component {
           </p>
         </div>
         <div className="flex-pc">
-          <Bio />
+          <Bio data={data} />
           {/* {mobile-view tab links} */}
           <div className="mobile-tabs" role="navigation">
             <p>Overview</p>
             <p className="active">
-              Repositores <span className="amount repo-count">41</span>
+              Repositores{" "}
+              <span className="amount repo-count">{data.repoCount}</span>
             </p>
             <p>Projects</p>
             <p>Packages</p>
           </div>
           <div className="tab-content">
-            <RepoList />
+            <RepoList repos={data.repos} total={data.repoCount} />
           </div>
         </div>
       </>

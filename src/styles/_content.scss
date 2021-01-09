@@ -456,6 +456,7 @@
               margin: 0;
               font-size: $fa-xs;
               color: $dark-sec;
+              cursor: pointer;
               @include responsive($smd) {
                 padding: 6px 15px;
                 font-size: $fa-xxs;
@@ -524,6 +525,43 @@
     .repo-list {
       padding: 0;
       @include flex(column nowrap, inherit, inherit);
+      .mssg {
+        @include borderbottom();
+        @include flex(row nowrap, flex-start, center);
+        .msg-text {
+          margin-right: auto;
+          color: $dark-sec;
+        }
+        .cancel {
+          cursor: pointer;
+          @include flex(row nowrap, flex-start, center);
+          &:hover {
+            button {
+              background-color: $blue;
+            }
+            .clear {
+              color: $blue;
+            }
+          }
+        }
+        button {
+          cursor: pointer;
+          background-color: $dark-pry;
+          border: 0;
+          color: $white;
+          width: 15px;
+          height: 15px;
+          text-align: center;
+          padding: 0;
+          border-radius: 3px;
+          font-weight: 500;
+        }
+        .clear {
+          color: $dark-pry;
+          margin: 0 0 0 3px;
+          padding: 0;
+        }
+      }
       .repo {
         padding: 25px 0;
         width: 100%;
@@ -573,14 +611,12 @@
                 margin-right: 2px;
               }
             }
-            a {
-              text-decoration: none;
+            p.link {
               color: $dark-pry;
               font-size: $fa-xxs;
               margin: 0 20px 3px 0;
+              cursor: pointer;
               &:hover {
-                cursor: pointer;
-                text-decoration: none;
                 color: $blue;
               }
             }
@@ -595,9 +631,6 @@
             color: $dark-tert;
             @include flex(row nowrap, center, center);
             @include border(6px, inherit, 28px);
-            @include responsive($md) {
-              @include border(6px, inherit, 31px);
-            }
             &:hover {
               cursor: pointer;
               background-color: $light;
@@ -618,19 +651,34 @@
     margin-top: 15px;
     @include flex(row nowrap, center, inherit);
     button {
-      color: $disabledblue;
-      padding: 0 20px;
-      background-color: $disabledwhite;
+      color: $blue;
+      padding: 0 10px;
+      background-color: $white;
       font-weight: 700;
+      font-size: $fa-xs;
+      cursor: pointer;
+      &:hover {
+        color: $white;
+        background-color: $blue;
+      }
       &:focus {
         outline: none;
       }
     }
+    button.disabled {
+      color: $disabledblue;
+      background-color: $disabledwhite;
+      cursor: default;
+      &:hover {
+        color: $disabledblue;
+        background-color: $disabledwhite;
+      }
+    }
     .btn-prev {
-      @include border(5px 0 0 5px, inherit, 33px);
+      @include border(5px 0 0 5px, inherit, 28px);
     }
     .btn-next {
-      @include border(0 5px 5px 0, inherit, 33px);
+      @include border(0 5px 5px 0, inherit, 28px);
       border-left: 0;
     }
   }
