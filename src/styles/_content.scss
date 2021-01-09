@@ -171,16 +171,24 @@
       .names {
         h1 {
           font-weight: 600;
-          font-size: $fa-mxl;
+          font-size: $fa-xl;
           margin: 0;
           padding-bottom: 0;
           color: $dark-sec;
         }
         h2 {
-          font-size: $fa-md;
+          font-size: $fa-mxl;
           font-weight: 400;
           margin-top: 2px;
           color: $dark-pry;
+        }
+        @include responsive($md) {
+          h1 {
+            font-size: $fa-mxl;
+          }
+          h2 {
+            font-size: $fa-md;
+          }
         }
       }
     }
@@ -188,6 +196,7 @@
       @include border(5px, 100%, 28px);
       @include flex(row nowrap, inherit, center);
       color: $dark-pry;
+      margin: 15px 0;
       @include responsive($md) {
         display: none;
       }
@@ -201,13 +210,96 @@
     }
     .desc {
       color: $dark-sec;
-      font-size: $fa-sm;
+      font-size: $fa-md;
       width: 80%;
       @include responsive($md) {
+        font-size: $fa-sm;
         margin-top: 0;
         p {
           margin-top: 0;
           padding-top: 0;
+        }
+      }
+    }
+    .btn-edit {
+      @include border(5px, 100%, 30px);
+      background-color: $light-pry;
+      font-size: $fa-sm;
+      color: $dark-sec;
+      font-weight: 500;
+      cursor: pointer;
+      @include responsive($md) {
+        font-size: $fa-xs;
+        font-weight: 600;
+      }
+      &:hover {
+        background-color: $light;
+      }
+    }
+    .flex-reverse {
+      margin: 15px 0;
+      font-size: $fa-sm;
+      @include flex(column-reverse nowrap, inherit, inherit);
+      @include responsive($md) {
+        @include flex(column nowrap, inherit, inherit);
+        font-size: $fa-xs;
+      }
+      .follow-count {
+        @include flex(row wrap, flex-start, center);
+        b {
+          margin: 0 2px;
+        }
+        a {
+          text-decoration: none;
+          color: $dark-pry;
+          span {
+            color: $dark-sec;
+            font-weight: 500;
+          }
+          &:hover {
+            color: $blue;
+            span {
+              color: $blue;
+            }
+          }
+        }
+      }
+      .contacts {
+        @include flex(column nowrap, flex-start, flex-start);
+        span {
+          color: $dark-pry;
+          font-size: $fa-sm;
+          vertical-align: baseline;
+          margin: 3px 0;
+          ion-icon {
+            font-weight: 500;
+          }
+          a {
+            color: $dark-sec;
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+              color: $blue;
+            }
+          }
+          p {
+            color: $dark-sec;
+            margin: 0;
+            padding: 0;
+            display: inline;
+          }
+        }
+        .pc-only {
+          display: none;
+        }
+        @include responsive($md) {
+          margin-top: 10px;
+          span {
+            font-size: $fa-xs;
+          }
+          .pc-only {
+            display: block;
+          }
         }
       }
     }
@@ -444,7 +536,7 @@
             a {
               color: $blue;
               font-weight: 600;
-              font-size: $fa-mxl;
+              font-size: $fa-lg;
               margin: 0 15px 0 0;
               text-decoration: none;
               &:hover {
@@ -454,7 +546,7 @@
           }
           .forked {
             color: $dark-pry;
-            font-size: $fa-xs;
+            font-size: $fa-xxs;
             margin: 5px 0;
             .link {
               text-decoration: none;
@@ -467,7 +559,7 @@
           }
           .detail {
             color: $dark-pry;
-            font-size: $fa-sm;
+            font-size: $fa-xs;
             margin: 5px 0;
           }
           .lang-updated {
@@ -475,7 +567,7 @@
             margin-top: 15px;
             p {
               color: $dark-pry;
-              font-size: $fa-xs;
+              font-size: $fa-xxs;
               margin: 0 20px 3px 0;
               .fa-circle {
                 margin-right: 2px;
@@ -484,7 +576,7 @@
             a {
               text-decoration: none;
               color: $dark-pry;
-              font-size: $fa-xs;
+              font-size: $fa-xxs;
               margin: 0 20px 3px 0;
               &:hover {
                 cursor: pointer;
@@ -498,7 +590,7 @@
           .btn-star {
             background-color: $light-pry;
             padding: 0 10px;
-            font-size: $fa-sm;
+            font-size: $fa-xs;
             font-weight: 500;
             color: $dark-tert;
             @include flex(row nowrap, center, center);

@@ -839,17 +839,26 @@
 
 #content .bio .avi-names .names h1 {
   font-weight: 600;
-  font-size: 20px;
+  font-size: 24px;
   margin: 0;
   padding-bottom: 0;
   color: #24292e;
 }
 
 #content .bio .avi-names .names h2 {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 400;
   margin-top: 2px;
   color: #586069;
+}
+
+@media screen and (min-width: 40em) {
+  #content .bio .avi-names .names h1 {
+    font-size: 20px;
+  }
+  #content .bio .avi-names .names h2 {
+    font-size: 16px;
+  }
 }
 
 #content .bio .set-status {
@@ -871,6 +880,7 @@
       -ms-flex-align: center;
           align-items: center;
   color: #586069;
+  margin: 15px 0;
 }
 
 @media screen and (min-width: 40em) {
@@ -890,17 +900,176 @@
 
 #content .bio .desc {
   color: #24292e;
-  font-size: 14px;
+  font-size: 16px;
   width: 80%;
 }
 
 @media screen and (min-width: 40em) {
   #content .bio .desc {
+    font-size: 14px;
     margin-top: 0;
   }
   #content .bio .desc p {
     margin-top: 0;
     padding-top: 0;
+  }
+}
+
+#content .bio .btn-edit {
+  border: 1px solid #e1e4e8;
+  border-radius: 5px;
+  width: 100%;
+  height: 30px;
+  background-color: #fafbfc;
+  font-size: 14px;
+  color: #24292e;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 40em) {
+  #content .bio .btn-edit {
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
+#content .bio .btn-edit:hover {
+  background-color: #f6f8fa;
+}
+
+#content .bio .flex-reverse {
+  margin: 15px 0;
+  font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-flow: column-reverse nowrap;
+          flex-flow: column-reverse nowrap;
+  -webkit-box-pack: inherit;
+      -ms-flex-pack: inherit;
+          justify-content: inherit;
+  -webkit-box-align: inherit;
+      -ms-flex-align: inherit;
+          align-items: inherit;
+}
+
+@media screen and (min-width: 40em) {
+  #content .bio .flex-reverse {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+    -webkit-box-pack: inherit;
+        -ms-flex-pack: inherit;
+            justify-content: inherit;
+    -webkit-box-align: inherit;
+        -ms-flex-align: inherit;
+            align-items: inherit;
+    font-size: 12px;
+  }
+}
+
+#content .bio .flex-reverse .follow-count {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#content .bio .flex-reverse .follow-count b {
+  margin: 0 2px;
+}
+
+#content .bio .flex-reverse .follow-count a {
+  text-decoration: none;
+  color: #586069;
+}
+
+#content .bio .flex-reverse .follow-count a span {
+  color: #24292e;
+  font-weight: 500;
+}
+
+#content .bio .flex-reverse .follow-count a:hover {
+  color: #0366d6;
+}
+
+#content .bio .flex-reverse .follow-count a:hover span {
+  color: #0366d6;
+}
+
+#content .bio .flex-reverse .contacts {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+#content .bio .flex-reverse .contacts span {
+  color: #586069;
+  font-size: 14px;
+  vertical-align: baseline;
+  margin: 3px 0;
+}
+
+#content .bio .flex-reverse .contacts span ion-icon {
+  font-weight: 500;
+}
+
+#content .bio .flex-reverse .contacts span a {
+  color: #24292e;
+  text-decoration: none;
+}
+
+#content .bio .flex-reverse .contacts span a:hover {
+  text-decoration: underline;
+  color: #0366d6;
+}
+
+#content .bio .flex-reverse .contacts span p {
+  color: #24292e;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+#content .bio .flex-reverse .contacts .pc-only {
+  display: none;
+}
+
+@media screen and (min-width: 40em) {
+  #content .bio .flex-reverse .contacts {
+    margin-top: 10px;
+  }
+  #content .bio .flex-reverse .contacts span {
+    font-size: 12px;
+  }
+  #content .bio .flex-reverse .contacts .pc-only {
+    display: block;
   }
 }
 
@@ -1354,7 +1523,7 @@
 #content .tab-content .repo-list .repo .name-lang .name a {
   color: #0366d6;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 18px;
   margin: 0 15px 0 0;
   text-decoration: none;
 }
@@ -1365,7 +1534,7 @@
 
 #content .tab-content .repo-list .repo .name-lang .forked {
   color: #586069;
-  font-size: 12px;
+  font-size: 10px;
   margin: 5px 0;
 }
 
@@ -1381,7 +1550,7 @@
 
 #content .tab-content .repo-list .repo .name-lang .detail {
   color: #586069;
-  font-size: 14px;
+  font-size: 12px;
   margin: 5px 0;
 }
 
@@ -1404,7 +1573,7 @@
 
 #content .tab-content .repo-list .repo .name-lang .lang-updated p {
   color: #586069;
-  font-size: 12px;
+  font-size: 10px;
   margin: 0 20px 3px 0;
 }
 
@@ -1415,7 +1584,7 @@
 #content .tab-content .repo-list .repo .name-lang .lang-updated a {
   text-decoration: none;
   color: #586069;
-  font-size: 12px;
+  font-size: 10px;
   margin: 0 20px 3px 0;
 }
 
@@ -1428,7 +1597,7 @@
 #content .tab-content .repo-list .repo .star .btn-star {
   background-color: #fafbfc;
   padding: 0 10px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: #202325;
   display: -webkit-box;

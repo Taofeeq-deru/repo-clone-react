@@ -11,7 +11,7 @@ class Layout extends Component {
         <div id="content">
           <RepoPage />
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }
